@@ -10,9 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } //旧版本引用方式
     }
 }
 rootProject.name = "XNet"
-//include ':app'
-include ':NetLib'
-//include ':netlibtest'
+include ':app'
+//include ':net-lib'
+
