@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "XNet"
 include ':app'
-//include ':net-lib'
+include ':net-lib'
 
