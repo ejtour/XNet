@@ -50,7 +50,7 @@ private val errorConverter: HttpResponseCallAdapterFactory.ErrorHandler?
                     val code = response.code()
                     val error = response.errorBody()
 
-                    LogUtils.d("--","code = $code")
+                    LogUtils.d("HttpResponseCall","code onResponse= $code")
 
                     //Http 返回[200..300).
                     if (response.isSuccessful) {
@@ -136,14 +136,13 @@ private val errorConverter: HttpResponseCallAdapterFactory.ErrorHandler?
                  * [-1,-100] 业务方不要占用了，作为预留全局公共错误码
                  */
                 override fun onFailure(call: Call<S>, throwable: Throwable) {
+                    LogUtils.d("HttpResponseCall","onFailure")
                     val networkResponse = when (throwable) {
 //                    is IOException -> HttpResult.NetworkError(
 //                        throwable.message.toString(),
 //                        400
 //                    )
 //
-
-
                         //IO Exception 太宽泛了，需要具体一点
                         is IOException -> HttpResult.Failure(
                             throwable.message.toString(),
@@ -159,7 +158,7 @@ private val errorConverter: HttpResponseCallAdapterFactory.ErrorHandler?
 
                         //尽量拓展完整一点，各种细节hold 完善一点，不要大部分都是unknow error
                         else -> {
-                            HttpResult.Failure(throwable.message ?: "unknow error", -2)
+                            HttpResult.Failure("HttpResponseCall "+throwable.message ?: "unknow error", -2)
                         }
 
                     }

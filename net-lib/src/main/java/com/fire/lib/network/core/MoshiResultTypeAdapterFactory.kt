@@ -1,6 +1,7 @@
 package com.fire.lib.network.core
 
 import com.fire.lib.network.error.BusinessException
+import com.fire.lib.utils.LogUtils
 import com.squareup.moshi.*
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -75,9 +76,7 @@ class MoshiResultTypeAdapterFactory(private val httpWrapper: HttpWrapper?) : Jso
 
             if (httpWrapper != null) {
                 reader.beginObject()
-
                 //一般都是code +msg + result/data
-
                 var errcode: Int? = null
                 var msg: String? = null
                 var data: Any? = null
@@ -92,21 +91,20 @@ class MoshiResultTypeAdapterFactory(private val httpWrapper: HttpWrapper?) : Jso
                         else -> reader.skipValue()
                     }
                 }
-
                 reader.endObject()
-
                 // 这个字段要看看是否服务器是否是必传字段
                 // 否则没有必要抛异常
                 if (errcode == null)
                     throw JsonDataException("Expected field [err code] not present.")
-
                 if (httpWrapper.isRequestSuccess(errcode)) {
+                    LogUtils.d("HttpWrapper ","isRequestSuccess")
                     return data as T
                 } else {
+                    LogUtils.d("HttpWrapper ","BusinessException")
                     throw BusinessException(errcode, msg)
                 }
-
             } else {
+                LogUtils.d("HttpWrapper ","不是标准的Code + msg +data")
                 //envelope == null 不是标准的Code + msg +data 也没关系
                 return dataTypeAdapter.fromJson(reader) as T
             }
