@@ -17,7 +17,8 @@ import androidx.annotation.AnimatorRes;
 import androidx.annotation.DrawableRes;
 import androidx.viewpager.widget.ViewPager;
 
-import com.ifengyu.aview.R;
+import com.fire.lib.network.R;
+
 
 public class CircleIndicator extends LinearLayout {
 

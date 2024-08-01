@@ -15,8 +15,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.ifengyu.aview.R;
-import com.ifengyu.aview.utils.UIUtils;
+import com.fire.lib.network.R;
+import com.fire.lib.utils.UIUtils;
+
 
 public class DonutProgress extends View {
     private Paint finishedPaint;
